@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Validation\Rule;
 use App\Models\FileUploader;
 use App\Models\Group;
+use App\Helpers\CommonHelper;
 use App\Models\Group_member;
 use App\Models\Event;
 use App\Models\Message_thrade;
@@ -1957,7 +1958,7 @@ if ($media->file_type == "image") {
             $response['date_of_birth'] = $user->date_of_birth;
             $response['about'] = $user->about;
             $response['photo'] = get_user_images($user->id, "optimized");
-            $response['cover_photo'] = get_cover_photos($user->id, "optimized");
+            $response['cover_photo'] = get_cover_photo($user->id, "optimized");
             $response['status'] = $user->status;
             $response['lastActive'] = $user->lastActive;
             $response['timezone'] = $user->timezone;
@@ -2127,6 +2128,9 @@ if ($media->file_type == "image") {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
     }
+
+
+    
     public function other_profile(Request $request, $id)
     {
         $token = $request->bearerToken();
