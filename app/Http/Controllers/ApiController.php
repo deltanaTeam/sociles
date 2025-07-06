@@ -577,7 +577,7 @@ $response = $followers->map(function ($follower) {
                     'story_id' => $story->story_id,
                     'user_id' => $story->user_id,
                     'name' => $user->name,
-                    'photo' => get_user_images($user->id, "optimized"),
+                    'photo' => url('assets/backend/images/' . $user->photo),
                     'publisher' => $story->publisher,
                     'fileType' => $filetype,
                     'privacy' => $story->privacy,
@@ -585,7 +585,7 @@ $response = $followers->map(function ($follower) {
                     'description' => $description,
                     'color' => $color,
                     'bg-color' => $bgColor,
-                    'post_images' => $storyImages, // Array of post images
+                    'post_images' => !empty($post->mobile_app_image) ? url('assets/backend/images/' . $post->mobile_app_image) : null,
                     'created_at' => $formattedDate, // Use the formatted date string
                     // Add other fields as needed
                 ];
@@ -766,6 +766,9 @@ $response = $followers->map(function ($follower) {
         $response['post'] = $timeline;
         return $response;
     }
+
+
+    
     // public function timeline(Request $request)
     // {
     //     $token = $request->bearerToken();

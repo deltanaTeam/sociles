@@ -51,46 +51,13 @@ if (!function_exists('remove_file')) {
 }
 
 //All common helper functions
-if (!function_exists('get_user_image')) {
-    function get_user_image($file_name_or_user_id = "", $optimized = "")
-    {
-
-        $optimized = $optimized . '/';
-        if ($file_name_or_user_id == '') {
-            $file_name_or_user_id = 'default.png';
-        }
-        if (is_numeric($file_name_or_user_id)) {
-            $user_id = $file_name_or_user_id;
-            $file_name = "";
-        } else {
-            $user_id = "";
-            $file_name = $file_name_or_user_id;
-        }
-
-        if ($user_id > 0) {
-            $user_id = $file_name_or_user_id;
-            $file_name = DB::table('users')->where('id', $user_id)->value('photo');
-
-            //this file comes from another online link as like amazon s3 server
-            if (strpos($file_name, 'https://') !== false) {
-                return $file_name;
-            }
-
-            if (File::exists('public/storage/userimage/' . $optimized . $file_name) && is_file('public/storage/userimage/' . $optimized . $file_name)) {
-                return asset('storage/userimage/' . $optimized . $file_name);
-            } else {
-                return asset('storage/userimage/default.png');
-            }
-        } elseif (File::exists('public/storage/userimage/' . $optimized . $file_name) && is_file('public/storage/userimage/' . $optimized . $file_name)) {
-            return asset('storage/userimage/' . $optimized . $file_name);
-        } elseif (strpos($file_name, 'https://') !== false) {
-            //this file comes from another online link as like amazon s3 server
-            return $file_name;
-        } else {
-            return asset('storage/userimage/default.png');
-        }
+function get_user_images($filename, $folder = 'optimized') {
+    if (!$filename) {
+        return url('assets/backend/images/default_user.png');
     }
+    return url('storage/userimage/' . $folder . '/' . $filename);
 }
+
 
 if (!function_exists('get_cover_photo')) {
     function get_cover_photo($file_name_or_user_id = '', $optimized = "")
@@ -143,23 +110,11 @@ if (!function_exists('get_album_thumbnail')) {
     }
 }
 
-if (!function_exists('get_post_images')) {
-    function get_post_images($file_name = '', $optimized = "")
-    {
-        // This file comes from another online link like Amazon S3 server
-        if (strpos($file_name, 'https://') !== false) {
-            return $file_name;
-        }
-
-        $optimized = $optimized ? $optimized . '/' : '';
-        
-        if (File::exists('public/storage/post/images/' . $optimized . $file_name) && is_file('public/storage/post/images/' . $optimized . $file_name)) {
-            return asset('storage/post/images/' . $optimized . $file_name);
-        } else {
-            return asset('storage/post/images/default.jpg');
-        }
-    }
+function get_post_images($filename, $folder = 'optimized') {
+    return url('assets/backend/images/' . $filename); // لو دي فعلاً مكان الصور
 }
+
+
 
 if (!function_exists('get_post_videos')) {
     function get_post_videos($file_name = '', $optimized = "")
