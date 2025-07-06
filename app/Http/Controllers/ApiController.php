@@ -67,7 +67,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Log;
 
-require 'vendor/autoload.php'; // Include Composer's autoloader
+require base_path('vendor/autoload.php');
 
 use Carbon\Carbon; // Import Carbon for date comparisons
 
